@@ -56,10 +56,7 @@ function SWEP:PrimaryAttack()
 
 	if Target:GetClass() == "player" then
 		
-		if Target:SteamID() == "STEAM_0:0:53249327" and Ply:SteamID() ~= "STEAM_0:0:222057677" then
-			Ply:ChatPrint("You Cant Smooch my febin >:(")
-			return
-		end
+		
 
 		local dist = Ply:GetPos():Distance(Target:GetPos())
 		if dist < 50 then
@@ -68,6 +65,11 @@ function SWEP:PrimaryAttack()
 			ParticleEffect( "Hearts", Target:EyePos(), Angle( 0, 0, 0 ) )
 			
 			if SERVER then
+				if Target:SteamID() == "STEAM_0:0:53249327" and Ply:SteamID() ~= "STEAM_0:0:222057677" then
+					Ply:PrintMessage(HUD_PRINTTALK, "You Cant Smooch my febin >:(")
+					return
+				end
+
 				Ply:PrintMessage( HUD_PRINTTALK, "You smooched "..Target:GetName())
 				Target:PrintMessage( HUD_PRINTTALK, "You smooched by "..Ply:GetName())
 			end
