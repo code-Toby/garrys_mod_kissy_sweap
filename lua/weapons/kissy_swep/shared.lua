@@ -1,5 +1,5 @@
 AddCSLuaFile()
-include('swepModelerCode.lua')
+include("weapons/kissy_swep/swepModelerCode.lua")
 
 if SERVER then
     SWEP.Weight             = 5
@@ -24,7 +24,7 @@ SWEP.HoldType = "slam"
 SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
 SWEP.UseHands = false
-SWEP.ViewModel = ""
+SWEP.ViewModel = "models/balloons/balloon_classicheart.mdl"
 SWEP.WorldModel = "models/balloons/balloon_classicheart.mdl"
 SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
@@ -48,7 +48,8 @@ SWEP.WElements = {
 }
 
 function SWEP:PrimaryAttack()
-
+	local Ply = self:GetOwner()
+	Ply:EmitSound( "weapons/kissy_swep/kissy_swepSound1.wav" )
 end
 
 function SWEP:SecondaryAttack()

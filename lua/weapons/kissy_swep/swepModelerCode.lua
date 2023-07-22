@@ -20,7 +20,7 @@
 
 function SWEP:Initialize()
 
-	// other initialize code goes here
+	self:SetHoldType(self.HoldType)
 
 	if CLIENT then
 	
