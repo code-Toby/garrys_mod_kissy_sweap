@@ -17,7 +17,7 @@
 		SWEP.ViewModelBoneMods tables are all optional
 		and only have to be visible to the client.
 ********************************************************/
-
+AddCSLuaFile()
 function SWEP:Initialize()
 
 	self:SetHoldType(self.HoldType)

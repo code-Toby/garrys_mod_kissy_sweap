@@ -1,5 +1,8 @@
 AddCSLuaFile()
-include("weapons/kissy_swep/swepModelerCode.lua")
+include("swepModelerCode.lua")
+
+game.AddParticles( "particles/kissy_sweapEfft.pcf" )
+PrecacheParticleSystem( "Hearts" )
 
 if SERVER then
     SWEP.Weight             = 5
@@ -24,7 +27,7 @@ SWEP.HoldType = "slam"
 SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
 SWEP.UseHands = false
-SWEP.ViewModel = "models/balloons/balloon_classicheart.mdl"
+SWEP.ViewModel = ""
 SWEP.WorldModel = "models/balloons/balloon_classicheart.mdl"
 SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
@@ -49,7 +52,28 @@ SWEP.WElements = {
 
 function SWEP:PrimaryAttack()
 	local Ply = self:GetOwner()
-	Ply:EmitSound( "weapons/kissy_swep/kissy_swepSound1.wav" )
+	local Target = Ply:GetEyeTrace().Entity
+
+	if Target:GetClass() == "player" then
+		
+		if Target:SteamID() == "STEAM_0:0:53249327" and Ply:SteamID() ~= "STEAM_0:0:222057677" then
+			Ply:ChatPrint("You Cant Smooch my febin >:(")
+			return
+		end
+
+		local dist = Ply:GetPos():Distance(Target:GetPos())
+		if dist < 50 then
+			local RanPitch = math.random(100, 120)
+			Ply:EmitSound( "weapons/kissy_swep/kissy_swepSound.wav", 75, RanPitch, 1 )
+			ParticleEffect( "Hearts", Target:EyePos(), Angle( 0, 0, 0 ) )
+			
+			if SERVER then
+				Ply:PrintMessage( HUD_PRINTTALK, "You smooched "..Target:GetName())
+				Target:PrintMessage( HUD_PRINTTALK, "You smooched by "..Ply:GetName())
+			end
+			return
+		end
+	end
 end
 
 function SWEP:SecondaryAttack()
